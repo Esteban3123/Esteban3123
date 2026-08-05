@@ -8,6 +8,27 @@
 
 ---
 
+## Regla de fechas (importante)
+
+En la empresa **no se trabaja fines de semana ni festivos**.  
+Todas las fechas de inicio/fin de actividades deben ser **lunes a viernes hábiles**.
+
+### Festivos Colombia durante la etapa (2026)
+
+| Fecha | Festivo | Afecta bitácora |
+|--------|---------|-----------------|
+| 18/05/2026 | Ascensión del Señor | B1 |
+| 08/06/2026 | Corpus Christi | B3 |
+| 15/06/2026 | Sagrado Corazón | B3 |
+| 29/06/2026 | San Pedro y San Pablo | B4 |
+| 20/07/2026 | Independencia de Colombia | B5 |
+| 07/08/2026 | Batalla de Boyacá | B7 (día de inicio del periodo; no laborable) |
+| 17/08/2026 | Asunción de la Virgen | B7 |
+| 12/10/2026 | Día de la Raza | B11 |
+| 02/11/2026 | Todos los Santos | B12 |
+
+---
+
 ## Datos fijos (igual en todas)
 
 | Campo | Valor |
@@ -38,8 +59,8 @@
 | 3 | 07/06/2026 | 21/06/2026 | Hecha |
 | 4 | 22/06/2026 | 07/07/2026 | Hecha |
 | 5 | 07/07/2026 | 21/07/2026 | Hecha |
-| **6** | **22/07/2026** | **06/08/2026** | **Pendiente — incluye bugs 03–04/08** |
-| 7 | 07/08/2026 | 21/08/2026 | Pendiente |
+| **6** | **22/07/2026** | **06/08/2026** | **Pendiente — incluye bugs 03–04/08 · 12 días hábiles** |
+| 7 | 07/08/2026 | 21/08/2026 | Pendiente · festivos 07/08 y 17/08 (actividades desde 10/08) |
 | 8 | 22/08/2026 | 06/09/2026 | Pendiente |
 | 9 | 07/09/2026 | 21/09/2026 | Pendiente |
 | 10 | 22/09/2026 | 07/10/2026 | Pendiente |
@@ -88,19 +109,19 @@ Configuración ERP, NullReferenceException, estructura ERP_Presentation / ERP_Se
 | Descripción | Continuación del análisis y validación de la configuración de los proyectos ERP_Presentation y ERP_Services, verificando referencias, dependencias y la correcta carga de archivos de configuración para la ejecución del sistema. |
 | Competencias | Implementar la solución de software de acuerdo con los requisitos de operación y modelos de referencia. |
 | Inicio | 22/07/26 |
-| Fin | 25/07/26 |
+| Fin | 24/07/26 |
 | Evidencia | Proceso de validación de configuración / registro de hallazgos. |
-| Observaciones | Sin inasistencias. |
+| Observaciones | Sin inasistencias. (22–24/07: mié–vie) |
 
 ### Fila 2
 | Campo | Texto |
 |--------|--------|
 | Descripción | Revisión de excepciones y flujo de inicialización en el ERP, identificando causas de errores en tiempo de ejecución y aplicando ajustes menores en la configuración de los módulos Presentation.Client y Presentation.Client.MVP. |
 | Competencias | Controlar la calidad del servicio de software de acuerdo con los estándares técnicos. |
-| Inicio | 28/07/26 |
+| Inicio | 27/07/26 |
 | Fin | 30/07/26 |
 | Evidencia | Proceso de diagnóstico / documento de hallazgos. |
-| Observaciones | |
+| Observaciones | (27–30/07: lun–jue) |
 
 ### Fila 3
 | Campo | Texto |
@@ -110,7 +131,7 @@ Configuración ERP, NullReferenceException, estructura ERP_Presentation / ERP_Se
 | Inicio | 03/08/26 |
 | Fin | 03/08/26 |
 | Evidencia | Producto: ajuste de layout en Designer / capturas del formulario. |
-| Observaciones | Tiempo aproximado de solución: 2 a 3 horas. |
+| Observaciones | Tiempo aproximado de solución: 2 a 3 horas. (lunes hábil) |
 
 ### Fila 4
 | Campo | Texto |
@@ -120,7 +141,7 @@ Configuración ERP, NullReferenceException, estructura ERP_Presentation / ERP_Se
 | Inicio | 03/08/26 |
 | Fin | 04/08/26 |
 | Evidencia | Documento: ticket Azure DevOps 39486 / proceso de análisis Presentation → reporte → XPO → vista SQL. |
-| Observaciones | Tiempo aproximado de investigación: 4 a 5 horas. |
+| Observaciones | Tiempo aproximado de investigación: 4 a 5 horas. (lun–mar) |
 
 ### Fila 5
 | Campo | Texto |
@@ -128,9 +149,9 @@ Configuración ERP, NullReferenceException, estructura ERP_Presentation / ERP_Se
 | Descripción | Elaboración del script SQL ALTER VIEW de AccountManagement.ViewReportAccountManagement para concatenar identificación y nombre del paciente (IPCODPACI - IPNOMCOMP) en el campo PatientCodeName, dejando el PDF del informe en el formato esperado. |
 | Competencias | Desarrollar la solución de software de acuerdo con el diseño y metodologías de desarrollo. Implementar la solución de software de acuerdo con los requisitos de operación y modelos de referencia. |
 | Inicio | 04/08/26 |
-| Fin | 04/08/26 |
+| Fin | 05/08/26 |
 | Evidencia | Documento: script SQL ALTER VIEW / proceso de verificación con OBJECT_DEFINITION en SQL Server. |
-| Observaciones | Tiempo aproximado: 2 a 3 horas. Causa raíz ubicada en la vista de base de datos. |
+| Observaciones | Tiempo aproximado: 2 a 3 horas. Causa raíz en la vista SQL. (mar–mié; 06/08 entrega) |
 
 ---
 
