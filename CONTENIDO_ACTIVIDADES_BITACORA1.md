@@ -1,98 +1,67 @@
-# Contenido listo para pegar en la bitácora (Excel GFPI-F-147)
+# Actividades bitácora — basadas en tus ejercicios reales
 
-**Bitácora N° 1** | Periodo: **23/10/2025 – 07/11/2025**  
-Programa: Análisis y Desarrollo de Software  
+Fuente: sesión Cursor **“Bug de tarea asignada”** (03/08/2026 – 04/08/2026)  
+Empresa / producto: **Vie RCM / Vie ERP** (Inventory + Account Management)  
+Tecnologías: **VB.NET, WinForms, DevExpress, SQL Server, Azure DevOps**
 
-Copia cada fila en tu Excel. Si alguna actividad no la hiciste, bórrala o ajústala a lo real.
-
----
-
-## FILA 1
-
-| Campo | Texto |
-|--------|--------|
-| **Descripción de la actividad** | Análisis de requerimientos del módulo asignado y elaboración de consultas SQL para extracción, filtrado y cruce de información desde la base de datos del sistema, según necesidades del área y del jefe inmediato. |
-| **Competencias aplicadas** | 220501092 – Establecer requisitos de la solución de software de acuerdo con estándares y procedimiento técnico. 220501046 – Utilizar herramientas informáticas de acuerdo con las necesidades de manejo de información. |
-| **Fecha de inicio** | 23/10/25 |
-| **Fecha de fin** | 28/10/25 |
-| **Evidencia de cumplimiento** | Documento: scripts SQL y registro de consultas realizadas / entregable de resultados al supervisor. |
-| **Observaciones** | Sin inasistencias. Actividad supervisada por el jefe inmediato. |
+> Si tu Excel de Bitácora N°1 dice 23/10/2025–07/11/2025, estas filas van en la **bitácora del periodo donde caigan el 03 y 04 de agosto 2026**.  
+> Tiempo estimado real de trabajo con el agente: **~6–9 horas** en 2 días.
 
 ---
 
-## FILA 2
+## FILA 1 — Bug alineación formulario Subgrupos
 
-| Campo | Texto |
-|--------|--------|
-| **Descripción de la actividad** | Desarrollo y ajuste de funcionalidades del software (frontend y/o backend) según el diseño técnico, aplicando buenas prácticas de programación, control de versiones y pruebas unitarias básicas de las consultas y componentes implementados. |
+| Campo | Texto para pegar |
+|--------|------------------|
+| **Descripción de la actividad** | Análisis y corrección de bug de interfaz en el formulario Diseño - Subgrupos (`FrmSubGroup`): desalineación de los checkboxes Maneja Lote y Maneja Fecha Vencimiento respecto a los campos Código y Nombre. Se revisó el Designer (DevExpress LayoutControl), se identificó que los `LayoutControlItem` de los checkboxes tenían anchos distintos (180/260 vs 390/403) y se definió el ajuste de Size, MinSize, MaxSize, TextSize y TextToControlDistance para alinear los controles sin modificar la lógica de negocio del code-behind. |
 | **Competencias aplicadas** | 220501096 – Desarrollar la solución de software de acuerdo con el diseño y metodologías de desarrollo. 220501098 – Controlar la calidad del servicio de software de acuerdo con los estándares técnicos. |
-| **Fecha de inicio** | 27/10/25 |
-| **Fecha de fin** | 03/11/25 |
-| **Evidencia de cumplimiento** | Producto: código fuente en repositorio / proceso de commits y pull requests / entregable de la funcionalidad. |
-| **Observaciones** | Se realizaron ajustes según retroalimentación del supervisor. |
+| **Fecha de inicio** | 03/08/26 |
+| **Fecha de fin** | 03/08/26 |
+| **Evidencia de cumplimiento** | Proceso: diagnóstico del Designer `FrmSubGroup.Designer.vb`. Producto: propuesta de ajuste de layout (Size 403×36, TextSize 100×21). Documento: capturas del formulario antes del ajuste. |
+| **Observaciones** | Tiempo aproximado de solución: 2 a 3 horas. El code-behind `FrmSubGroup.vb` no requería cambios; la causa era únicamente el layout en el Designer. |
 
 ---
 
-## FILA 3
+## FILA 2 — Investigación bug 39486 columna Paciente en PDF
 
-| Campo | Texto |
-|--------|--------|
-| **Descripción de la actividad** | Construcción y optimización de consultas a base de datos (SELECT, JOIN, filtros y reportes) para soportar listados, búsquedas y reportes del sistema; verificación de resultados y corrección de inconsistencias en los datos. |
-| **Competencias aplicadas** | 220501096 – Desarrollar la solución de software de acuerdo con el diseño y metodologías de desarrollo. 220501046 – Utilizar herramientas informáticas de acuerdo con las necesidades de manejo de información. |
-| **Fecha de inicio** | 29/10/25 |
-| **Fecha de fin** | 05/11/25 |
-| **Evidencia de cumplimiento** | Documento: archivo de consultas SQL documentadas / producto: reportes generados en el sistema. |
-| **Observaciones** | Sin dificultades mayores. Se documentaron las consultas para reutilización. |
-
----
-
-## FILA 4
-
-| Campo | Texto |
-|--------|--------|
-| **Descripción de la actividad** | Participación en reuniones de seguimiento, revisión de tickets/tareas asignadas y apoyo en pruebas funcionales de los módulos desarrollados, registrando hallazgos y aplicando correcciones menores en el software. |
-| **Competencias aplicadas** | 220501098 – Controlar la calidad del servicio de software de acuerdo con los estándares técnicos. 240201524 – Desarrollar procesos de comunicación eficaces y efectivos. |
-| **Fecha de inicio** | 03/11/25 |
-| **Fecha de fin** | 07/11/25 |
-| **Evidencia de cumplimiento** | Proceso: actas o registro de seguimiento / documento: listado de pruebas y correcciones aplicadas. |
-| **Observaciones** | Cumplimiento de horarios. Trabajo en equipo con el área de desarrollo. |
+| Campo | Texto para pegar |
+|--------|------------------|
+| **Descripción de la actividad** | Investigación del bug Azure DevOps 39486 (severidad High) del módulo Gestión de Cuentas / Informe Gestión de Cuentas Detallado (Vie RCM): en el PDF la columna Paciente mostraba solo el nombre y omitía la identificación. Se realizó trazabilidad capa por capa: formulario `FrmReportAccountManagement`, reporte DevExpress `rptAccountManagementReportDetailed`, entidad XPO `ViewReportAccountManagementXpo` y vista SQL `AccountManagement.ViewReportAccountManagement` en la base INDIGO636 (ambiente QA 636 – Fundación Hospital de la Misericordia). |
+| **Competencias aplicadas** | 220501093 – Evaluar requisitos de la solución de software de acuerdo con metodologías de análisis y estándares. 220501098 – Controlar la calidad del servicio de software de acuerdo con los estándares técnicos. 220501046 – Utilizar herramientas informáticas de acuerdo con las necesidades de manejo de información. |
+| **Fecha de inicio** | 03/08/26 |
+| **Fecha de fin** | 04/08/26 |
+| **Evidencia de cumplimiento** | Documento: ticket Azure DevOps 39486 / PBI 26962. Proceso: análisis Presentation → XtraReport → XPO → vista SQL. Producto: identificación de causa raíz (`IPNOMCOMP AS PatientCodeName` sin concatenar `IPCODPACI`). |
+| **Observaciones** | Tiempo aproximado de investigación: 4 a 5 horas entre el 03 y 04/08/2026. Se confirmó que la causa no estaba en el formulario ni en el Designer del reporte, sino en la vista de base de datos. |
 
 ---
 
-## FILA 5 (opcional)
+## FILA 3 — Consulta SQL y script ALTER VIEW (solución bug 39486)
 
-| Campo | Texto |
-|--------|--------|
-| **Descripción de la actividad** | Documentación técnica de las consultas, procedimientos y cambios realizados en el sistema, incluyendo instrucciones de uso para el equipo y actualización de manuales o notas técnicas internas. |
-| **Competencias aplicadas** | 220501097 – Implementar la solución de software de acuerdo con los requisitos de operación y modelos de referencia. 220501095 – Diseñar la solución de software de acuerdo con procedimientos y requisitos técnicos. |
-| **Fecha de inicio** | 05/11/25 |
-| **Fecha de fin** | 07/11/25 |
-| **Evidencia de cumplimiento** | Documento: manual técnico / notas de documentación entregadas al supervisor. |
-| **Observaciones** | Entrega de bitácora el 06/11/2025. |
-
----
-
-## Competencias técnicas ADSO (para que combines según lo que sí hiciste)
-
-| Código | Competencia |
-|--------|-------------|
-| **220501092** | Establecer requisitos de la solución de software |
-| **220501093** | Evaluar requisitos de la solución de software |
-| **220501094** | Estructurar propuesta técnica de servicio de TI |
-| **220501095** | Diseñar la solución de software |
-| **220501096** | Desarrollar la solución de software |
-| **220501097** | Implementar la solución de software |
-| **220501098** | Controlar la calidad del servicio de software |
-| **220501046** | Utilizar herramientas informáticas / manejo de información |
-| **240201524** | Comunicación eficaz y efectiva |
+| Campo | Texto para pegar |
+|--------|------------------|
+| **Descripción de la actividad** | Elaboración y documentación de la solución SQL para el bug 39486: consulta/definición de la vista `AccountManagement.ViewReportAccountManagement` mediante `OBJECT_DEFINITION` en SQL Server (BD INDIGO636) y construcción del script `ALTER VIEW` para que el campo `PatientCodeName` concatene identificación y nombre del paciente (`IPCODPACI - IPNOMCOMP`) con manejo de nulos, dejando el PDF del informe detallado en el formato esperado (ej. `1146147731 - MATIAS MORALES AYALA`). |
+| **Competencias aplicadas** | 220501096 – Desarrollar la solución de software de acuerdo con el diseño y metodologías de desarrollo. 220501097 – Implementar la solución de software de acuerdo con los requisitos de operación y modelos de referencia. 220501046 – Utilizar herramientas informáticas de acuerdo con las necesidades de manejo de información. |
+| **Fecha de inicio** | 04/08/26 |
+| **Fecha de fin** | 04/08/26 |
+| **Evidencia de cumplimiento** | Documento: script SQL `ALTER VIEW` entregado para QA. Proceso: verificación con `OBJECT_DEFINITION` / definición completa de la vista. Producto: campo Paciente con formato Identificación - Nombre Completo. |
+| **Observaciones** | Tiempo aproximado de elaboración del script y validación de la definición: 2 a 3 horas. Pendiente ejecución/validación final en ambiente QA por el aprendiz/supervisor. Sin inasistencias. |
 
 ---
 
-## Cómo usarlo rápido
+## Resumen de tiempos (para observaciones o tu control)
 
-1. Abre tu Excel GFPI-F-147.  
-2. Pega 3 a 5 filas (con 3 suele bastar).  
-3. Cambia solo lo que no coincida con tu empresa (nombres de módulos, herramientas: MySQL, PostgreSQL, React, Java, etc.).  
-4. En evidencias no subas datos sensibles de la empresa; con decir “documento / producto / proceso” alcanza.
+| Actividad | Fecha | Tiempo aprox. |
+|-----------|--------|----------------|
+| Bug Subgrupos (alineación UI) | 03/08/2026 | 2–3 h |
+| Investigación bug 39486 (PDF Paciente) | 03–04/08/2026 | 4–5 h |
+| Script SQL ALTER VIEW | 04/08/2026 | 2–3 h |
+| **Total** | **03–04/08/2026** | **~8–11 h** |
 
-Si me dices **qué hiciste exactamente** esos días (ej. “consultas en MySQL”, “pantallas en React”, “API en Node”, “soporte a usuarios”), te las dejo **ya personalizadas** con nombres reales de tu trabajo.
+---
+
+## Notas para el Excel
+
+1. Pega las 3 filas tal cual (o acórtalas un poco si tu celda es pequeña).  
+2. En **Evidencia** no adjuntos datos sensibles del hospital ni scripts de producción; con “documento / proceso / producto” basta.  
+3. Si el instructor pide el **código de competencia** solo con el nombre corto, puedes dejar:  
+   `220501096 Desarrollar la solución de software` / `220501098 Controlar la calidad del servicio de software` / etc.
