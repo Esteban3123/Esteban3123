@@ -6,6 +6,7 @@ Solución documental y de apoyo para el **Editor de Expresiones** de Vie HCM (Le
 
 | Archivo | Descripción |
 |---------|-------------|
+| [ACCEPTANCE_CRITERIA_PBI_24152.md](./ACCEPTANCE_CRITERIA_PBI_24152.md) | AC oficiales (Dado/Cuando/Entonces) |
 | [SOLUCION_PBI_24152_IBC_PENSION_PRIMA_MEDIA.md](./SOLUCION_PBI_24152_IBC_PENSION_PRIMA_MEDIA.md) | Análisis, mapeo, checklist de implementación, CA y DoD |
 | [mapas/PBI_24152_MAPEO_VARIABLES.md](./mapas/PBI_24152_MAPEO_VARIABLES.md) | Tabla corta label ↔ variable |
 | [snippets/RegisterIbcPensionExpressionFields.vb](./snippets/RegisterIbcPensionExpressionFields.vb) | Snippet VB.NET (adaptar al API real) |
