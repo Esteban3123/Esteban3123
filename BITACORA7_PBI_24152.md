@@ -42,11 +42,11 @@
 ### Fila 4
 | Campo | Texto |
 |--------|--------|
-| Descripción | Definición de casos de prueba y criterios de aceptación para las variables IBC Pensión Prima Media e IBC Pensión ACCAI: paridad con labels del formulario, uso en fórmulas del editor, regresión de Campos IBC previos y cobertura en liquidación de nómina y contrato. |
+| Descripción | Documentación de Acceptance Criteria del PBI 24152 en formato Dado/Cuando/Entonces: disponibilidad de IBC Pensión Prima Media mapeada a IBC Pensión CPM, e IBC Pensión ACCAI mapeada a IBC Pensión ACCAI (ventana IBC Control Nómina), más checklist de verificación en QA. |
 | Competencias | Controlar la calidad del servicio de software de acuerdo con los estándares técnicos. |
 | Inicio | 12/08/26 |
 | Fin | 13/08/26 |
-| Evidencia | Documento: casos de prueba A/B/C y DoD del PBI 24152. |
+| Evidencia | Documento: ACCEPTANCE_CRITERIA_PBI_24152.md / casos de prueba A/B/C. |
 | Observaciones | (mié–jue) |
 
 ### Fila 5

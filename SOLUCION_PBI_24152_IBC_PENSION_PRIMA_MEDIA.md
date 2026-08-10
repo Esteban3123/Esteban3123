@@ -166,17 +166,42 @@ Si el catálogo se arma con tokens entre corchetes (como en la captura: `[IBC Pe
 
 ---
 
-## 6. Criterios de aceptación
+## 6. Acceptance Criteria (oficiales del PBI)
 
-| # | Criterio | Cómo probarlo |
-|---|----------|---------------|
-| CA1 | En Editor de Expresiones → categoría **Campos**, aparece **IBC Pensión Prima Media** | Abrir editor desde concepto/fórmula de nómina |
-| CA2 | En **Campos** aparece **IBC Pensión ACCAI** | Misma prueba |
-| CA3 | El valor de **IBC Pensión Prima Media** = label **IBC Pensión - CPM** de la liquidación en pantalla | Liquidar empleado de prueba; comparar montos |
-| CA4 | El valor de **IBC Pensión ACCAI** = label **IBC Pensión - ACCAI** | Idem |
-| CA5 | Se puede usar en fórmulas, ej. junto a operadores `+ - * /` y paréntesis | Crear fórmula de prueba y Aceptar |
-| CA6 | Disponible en flujo de **liquidación de nómina** y **liquidación de contrato** | Repetir CA3–CA5 en ambos formularios |
-| CA7 | No rompe Campos IBC existentes (`IBC Pensión`, `IBC Salud`, etc.) | Regresión rápida de fórmulas ya configuradas |
+Fuente: mensaje de Acceptance Criteria del backlog.
+
+### AC1 — Creación de Variable "IBC Pensión Prima Media" en Editor de Expresiones
+
+**Escenario:** Disponibilidad de nueva variable
+
+| | |
+|--|--|
+| **Dado** | El usuario accede al editor de expresiones. |
+| **Cuando** | Busca la variable **"IBC Pensión Prima Media"**. |
+| **Entonces** | La variable debe estar disponible para su uso, mapeada al campo **"IBC Pensión CPM"** del formulario de liquidación de nómina (ventana **IBC Control Nómina**). |
+
+### AC2 — Creación de Variable "IBC Pensión ACCAI" en Editor de Expresiones
+
+**Escenario:** Disponibilidad de nueva variable
+
+| | |
+|--|--|
+| **Dado** | El usuario accede al editor de expresiones. |
+| **Cuando** | Busca la variable **"IBC Pensión ACCAI"**. |
+| **Entonces** | La variable debe estar disponible para su uso, mapeada al campo **"IBC Pensión ACCAI"** del formulario de liquidación de nómina (ventana **IBC Control Nómina**). |
+
+### Checklist de verificación (derivado de los AC)
+
+| # | Verificar | Resultado esperado |
+|---|-----------|--------------------|
+| AC1.1 | Variable visible en categoría **Campos** | Aparece **IBC Pensión Prima Media** |
+| AC1.2 | Mapeo de valor | Igual al campo/label **IBC Pensión CPM** (IBC Control Nómina) |
+| AC1.3 | Uso en fórmula | Se puede insertar y aceptar (ej. `= [IBC Pensión Prima Media]`) |
+| AC2.1 | Variable visible en categoría **Campos** | Aparece **IBC Pensión ACCAI** |
+| AC2.2 | Mapeo de valor | Igual al campo/label **IBC Pensión ACCAI** (IBC Control Nómina) |
+| AC2.3 | Uso en fórmula | Se puede insertar y aceptar (ej. `= [IBC Pensión ACCAI]`) |
+
+> Regresión recomendada (no está en el AC literal, pero evita roturas): Campos IBC previos (`IBC Pensión`, `IBC Salud`, etc.) siguen funcionando.
 
 ---
 
@@ -268,6 +293,7 @@ Solo aplica si existen los Campos/Constantes `Salario mínimo` y `Pensión Prima
 
 | Archivo | Uso |
 |---------|-----|
+| `ACCEPTANCE_CRITERIA_PBI_24152.md` | AC oficiales Dado/Cuando/Entonces |
 | `mapas/PBI_24152_MAPEO_VARIABLES.md` | Tabla corta de mapeo label ↔ variable |
 | `snippets/RegisterIbcPensionExpressionFields.vb` | Snippet VB.NET de registro |
 | `sql/PBI_24152_ExpressionFields_TEMPLATE.sql` | Plantilla SQL si el catálogo es por BD |

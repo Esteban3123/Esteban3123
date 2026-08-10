@@ -2,10 +2,12 @@
 
 ## Variables del Editor de Expresiones
 
-| Variable (Campos) | Token sugerido | Label origen | Ventanilla | Formulario |
-|-------------------|----------------|--------------|------------|------------|
-| IBC Pensión Prima Media | `[IBC Pensión Prima Media]` | IBC Pensión - CPM | IBC - Control Nómina | Liquidación de Nómina |
-| IBC Pensión ACCAI | `[IBC Pensión ACCAI]` | IBC Pensión - ACCAI | IBC - Control Nómina | Liquidación de Nómina |
+| Variable (Campos) | Token sugerido | Campo origen (AC) | Ventanilla | Formulario |
+|-------------------|----------------|--------------------|------------|------------|
+| IBC Pensión Prima Media | `[IBC Pensión Prima Media]` | IBC Pensión CPM | IBC Control Nómina | Liquidación de Nómina |
+| IBC Pensión ACCAI | `[IBC Pensión ACCAI]` | IBC Pensión ACCAI | IBC Control Nómina | Liquidación de Nómina |
+
+> Nombres según Acceptance Criteria oficiales. En UI a veces aparece como `IBC Pensión - CPM` / `IBC Pensión - ACCAI`.
 
 ## Relación con campos IBC ya existentes (referencia UI)
 
