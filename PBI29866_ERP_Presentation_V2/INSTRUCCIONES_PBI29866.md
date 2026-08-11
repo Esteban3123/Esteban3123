@@ -371,7 +371,8 @@ Después de `INDBteThirdPartyNit.Text = ReturnValue`:
     Private Sub ApplyNitRulesByClass(classValue As Integer?)
         If classValue.HasValue AndAlso classValue.Value = 1 Then
             ' Nacional: solo numérico, max 25, DV visible/calculable
-            IndigoTextEdit1.SetMascara(INDBteThirdPartyNit, Presentation.Controls.IndigoTextEdit.EMask.Numeros)
+            ' Miembro EMask solo-dígitos según IntelliSense (no .Numeros si BC30456)
+            IndigoTextEdit1.SetMascara(INDBteThirdPartyNit, Presentation.Controls.IndigoTextEdit.EMask.Numerico)
             INDBteThirdPartyNit.Properties.MaxLength = 25
             INDLyVC.ShowLayout()
         ElseIf classValue.HasValue AndAlso classValue.Value = 2 Then

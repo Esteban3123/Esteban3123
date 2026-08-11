@@ -320,7 +320,9 @@ Después de `INDBteThirdPartyNit.Text = ReturnValue`:
     ''' </summary>
     Private Sub ApplyNitRulesByClass(classValue As Integer?)
         If classValue.HasValue AndAlso classValue.Value = 1 Then
-            IndigoTextEdit1.SetMascara(INDBteThirdPartyNit, Presentation.Controls.IndigoTextEdit.EMask.Numeros)
+            ' Usar el miembro EMask de SOLO dígitos de TU solución (IntelliSense tras EMask.).
+            ' NO usar .Numeros si BC30456 — suele ser .Numerico / .SoloNumeros / similar.
+            IndigoTextEdit1.SetMascara(INDBteThirdPartyNit, Presentation.Controls.IndigoTextEdit.EMask.Numerico)
             INDBteThirdPartyNit.Properties.MaxLength = 25
             INDLyVC.ShowLayout()
         ElseIf classValue.HasValue AndAlso classValue.Value = 2 Then

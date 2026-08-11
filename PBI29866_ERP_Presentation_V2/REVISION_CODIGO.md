@@ -85,6 +85,32 @@ Y en el bloque `INDLciCIIU`, cambia Location para que no peleen (aunque CIIU est
 
 ---
 
+## Error BC30456: `EMask.Numeros` no existe
+
+El subrayado en `ApplyNitRulesByClass` **no** es por `VerificationCode`. El mensaje real es:
+
+> `'Numeros' no es un miembro de 'IndigoTextEdit.EMask'.`
+
+En tu solución el enum tiene (al menos) `Ninguno`, `AlfaNumerico`, `Moneda`… pero **no** `Numeros`.
+
+### Cómo ver el nombre correcto
+
+1. En el código escribe `Presentation.Controls.IndigoTextEdit.EMask.`  
+2. Abre IntelliSense (`Ctrl+Space`) y elige el valor que restrinja a **solo dígitos** (suele llamarse `Numerico`, `SoloNumeros`, `Numbers`, etc.).
+3. O F12 sobre `EMask` / `SetMascara` y lee el `Enum EMask` en `IndigoTextEdit`.
+
+### Parche en `ApplyNitRulesByClass` (Clase = 1 Nacional)
+
+Reemplaza **solo** la línea con `Numeros` por el miembro que te salga en IntelliSense, por ejemplo:
+
+```vb
+IndigoTextEdit1.SetMascara(INDBteThirdPartyNit, Presentation.Controls.IndigoTextEdit.EMask.Numerico)
+```
+
+Si no hay máscara solo-números, deja temporalmente `AlfaNumerico` en Nacional (funciona, pero permite letras) y avísame el listado completo de `EMask` para ajustar la guía.
+
+---
+
 ## Opcional (recomendado)
 
 ### A) Clase visualmente obligatoria (Designer)
