@@ -42,19 +42,41 @@ Detalle de ejemplo: [snippets/FrmSettingBilling_Designer_APLICAR.md](snippets/Fr
 
 ---
 
-## 1) Interfaz `ISettingBilling`
+## 1) Interfaz `ISettingBilling` (`Presentacion.Billing.MVP`)
 
-Agregar (junto a `ApplyBasicBilling`):
+Archivo confirmado. Guía dedicada: [snippets/ISettingBilling_APLICAR.md](snippets/ISettingBilling_APLICAR.md).
+
+**Buscar:**
 
 ```vb
-''' <summary>
-''' Habilitar Facturación Tipo Mandato (Si/No). Default: False (No).
-''' Solo aplica cuando ApplyBasicBilling = True.
-''' </summary>
-Property EnableMandateBilling As Boolean
+    Property ApplyBasicBilling As Boolean
+    ''' <summary>
+    ''' Permite definir la creacion o no, de un pagare cuando no existe anticipo del paciente relacionado con copagos
+    ''' </summary>
+    ''' <returns></returns>
+    Property GeneratePromissoryNote As Boolean
 ```
 
-Archivo de referencia: [snippets/ISettingBilling_EnableMandateBilling.vb](snippets/ISettingBilling_EnableMandateBilling.vb).
+**Reemplazar por:**
+
+```vb
+    Property ApplyBasicBilling As Boolean
+
+    ''' <summary>
+    ''' Habilitar Facturación Tipo Mandato (Si/No). Default: False (No).
+    ''' Solo aplica cuando ApplyBasicBilling = True.
+    ''' </summary>
+    ''' <returns></returns>
+    Property EnableMandateBilling As Boolean
+
+    ''' <summary>
+    ''' Permite definir la creacion o no, de un pagare cuando no existe anticipo del paciente relacionado con copagos
+    ''' </summary>
+    ''' <returns></returns>
+    Property GeneratePromissoryNote As Boolean
+```
+
+Snippet: [snippets/ISettingBilling_EnableMandateBilling.vb](snippets/ISettingBilling_EnableMandateBilling.vb).
 
 ---
 

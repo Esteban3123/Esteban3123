@@ -23,7 +23,8 @@ Parámetro en **Parámetros de Facturación** (`FrmSettingBilling`) para habilit
 | [APLICAR.md](APLICAR.md) | Pasos A1–A7 + Designer + BD + gate |
 | [sql/Add_EnableMandateBilling_SettingsBilling.sql](sql/Add_EnableMandateBilling_SettingsBilling.sql) | Columna BIT default 0 |
 | [snippets/FrmSettingBilling_EnableMandateBilling.vb](snippets/FrmSettingBilling_EnableMandateBilling.vb) | Fragmentos del form |
-| [snippets/ISettingBilling_EnableMandateBilling.vb](snippets/ISettingBilling_EnableMandateBilling.vb) | Interfaz |
+| [snippets/ISettingBilling_APLICAR.md](snippets/ISettingBilling_APLICAR.md) | Diff exacto de la interfaz |
+| [snippets/ISettingBilling_EnableMandateBilling.vb](snippets/ISettingBilling_EnableMandateBilling.vb) | Bloque a pegar en `ISettingBilling` |
 | [snippets/SettingsBilling_EnableMandateBilling.vb](snippets/SettingsBilling_EnableMandateBilling.vb) | Entidad |
 | [snippets/FrmSettingBilling_Designer_APLICAR.md](snippets/FrmSettingBilling_Designer_APLICAR.md) | Designer |
 | [snippets/Gate_FacturacionMandato.vb](snippets/Gate_FacturacionMandato.vb) | Gate AC6 |
