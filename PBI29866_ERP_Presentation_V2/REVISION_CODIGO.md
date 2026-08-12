@@ -101,13 +101,13 @@ En tu solución el enum tiene (al menos) `Ninguno`, `AlfaNumerico`, `Moneda`… 
 
 ### Parche en `ApplyNitRulesByClass` (Clase = 1 Nacional)
 
-Reemplaza **solo** la línea con `Numeros` por el miembro que te salga en IntelliSense, por ejemplo:
+En esta solución el miembro correcto es **`Numerico`** (confirmado por Esteban):
 
 ```vb
 IndigoTextEdit1.SetMascara(INDBteThirdPartyNit, Presentation.Controls.IndigoTextEdit.EMask.Numerico)
 ```
 
-Si no hay máscara solo-números, deja temporalmente `AlfaNumerico` en Nacional (funciona, pero permite letras) y avísame el listado completo de `EMask` para ajustar la guía.
+`FrmThirdParty.vb` con `EMask.Numerico` → OK para máscara Nacional.
 
 ---
 
