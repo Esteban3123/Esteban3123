@@ -82,7 +82,11 @@ Snippet: [snippets/ISettingBilling_EnableMandateBilling.vb](snippets/ISettingBil
 
 ## 2) Entidad `SettingsBilling` + BD
 
+Guía dedicada: [snippets/SettingsBilling_APLICAR.md](snippets/SettingsBilling_APLICAR.md).
+
 ### 2.1 Propiedad en la entidad
+
+Buscar `ApplyBasicBilling` en `SettingsBilling` y agregar:
 
 ```vb
 ''' <summary>
@@ -90,6 +94,8 @@ Snippet: [snippets/ISettingBilling_EnableMandateBilling.vb](snippets/ISettingBil
 ''' </summary>
 Public Property EnableMandateBilling As Boolean
 ```
+
+Si usa backing field + `OnPropertyChanged` / ChangeTracker, **duplicar el patrón de `ApplyBasicBilling`** (no la auto-property a ciegas).
 
 Si la entidad se genera desde EDMX/DBML, regenerar tras el script SQL o mapear la columna a mano.
 
@@ -99,7 +105,7 @@ Usar [sql/Add_EnableMandateBilling_SettingsBilling.sql](sql/Add_EnableMandateBil
 
 - Columna `EnableMandateBilling BIT NOT NULL DEFAULT(0)`
 - Backfill a `0` (No) en todas las UO
-- Ajustar el nombre real de la tabla si no es `SettingsBilling` / `Billing.SettingsBilling`
+- Ajustar schema/tabla con la query de `ApplyBasicBilling` documentada en `SettingsBilling_APLICAR.md`
 
 También actualizar repositorio/SP/EF que lea y guarde `SettingsBilling` para incluir la columna (mismo sitio donde ya va `ApplyBasicBilling`).
 
