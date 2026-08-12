@@ -2,68 +2,70 @@
 
 ## FrmThirdParty.vb — APROBADO con 1 corrección
 
-El `.vb` que pegó Esteban ya incluye casi todo el PBI:
-
 | Requisito | Estado |
 |-----------|--------|
 | Flags `_pendingIdentification` / `_identificationConfirmed` | OK |
 | Gets null-safe | OK |
-| `INDsleClass.Enabled` en ActionsOnControls | OK |
-| `CleanControls` con flags + ocultar CIIU/Actividad | OK |
-| Clase obligatoria Natural y Jurídico | OK |
-| `.Class = ClassThirdParty` en Natural | OK |
+| `INDsleClass.Enabled` | OK |
+| `CleanControls` / validación Clase / ConfirmIdentification | OK |
 | `ApplyNitRulesByClass` con `EMask.Numerico` | OK |
-| `ConfirmIdentification` + KeyDown | OK |
-| Búsqueda / Load / IdEntityLoaded sin reconfirmar | OK |
-| Layout runtime (Clase → Segmento 1) | OK |
-| `ClickDeshacer` solo `CleanControls` | OK |
+| Layout runtime + `ClickDeshacer` | OK |
 
-### Corrección obligatoria en `Frm_Disposed`
-
+### Corrección en `Frm_Disposed`
 ```vb
-' MAL (Boolean no admite Nothing):
-_identificationConfirmed = Nothing
-
-' BIEN:
-_identificationConfirmed = False
+_identificationConfirmed = False   ' no Nothing
 ```
-
-### Opcional (más seguro en layout)
-
-En `INDslePersonTypeEditValueChangedManual`, preferir:
-
-```vb
-If INDlyItemClass.Parent IsNot Nothing AndAlso INDlyItemClass.Parent IsNot INDLyGrThirdPartyBasicData Then
-    INDlyItemClass.Parent.Remove(INDlyItemClass)
-    INDLyGrThirdPartyBasicData.Add(INDlyItemClass)
-End If
-```
-
-en lugar de `INDLyGrParameter.Remove(INDlyItemClass)` (falla si Clase ya no está en Parámetros tras el Designer).
 
 ---
 
-## FrmThirdParty.Designer.vb — PENDIENTE (sigue en baseline)
-
-El Designer pegado **aún no** tiene los 4 cambios. Aplicar `FrmThirdParty_Designer_APLICAR.md`:
-
-1. Agregar `Me.INDlyItemClass` al `Items` de `INDLyGrThirdPartyBasicData`
-2. Quitar `Me.INDlyItemClass` del `Items` de `INDLyGrParameter`
-3. `INDLciCIIU.Visibility = Never`
-4. `INDlygEconomicActivity.Visibility = Never`
+## FrmThirdParty.Designer.vb — aplicar 4 bloques
+Ver `FrmThirdParty_Designer_APLICAR.md` / código enviado al usuario.
 
 ---
 
-## PThirdParty.vb — pendiente de pegar para revisión
+## PThirdParty.vb — PENDIENTE (baseline sin PBI)
 
-Copiar el archivo completo de esta carpeta (`PThirdParty.vb`). Debe omitir DV cuando Clase = Extranjero.
+El archivo pegado **no** tiene el cambio de DV por Clase.
+Reemplazar solo `Calculate_VerificationCode` por la versión de `PThirdParty.vb` de esta carpeta.
+
+```vb
+Public Sub Calculate_VerificationCode(ByVal nit As String, personType As Integer, identificationType As Integer, Optional FlagLoadControls As Boolean = True)
+    If Not FlagLoadControls Then
+        Exit Sub
+    End If
+
+    ' Extranjero: no calcular DV
+    If View.ClassThirdParty.HasValue AndAlso View.ClassThirdParty.Value = 2 Then
+        View.VerificationCode = String.Empty
+        Exit Sub
+    End If
+
+    ' Solo Nacional: NIT debe ser numérico
+    If View.ClassThirdParty.HasValue AndAlso View.ClassThirdParty.Value = 1 Then
+        If Not IsNumeric(nit) Then
+            View.VerificationCode = String.Empty
+            Exit Sub
+        End If
+    End If
+
+    If personType = 2 Then
+        Me.View.VerificationCode = GetVerificationCode(nit)
+    ElseIf personType = 1 AndAlso (identificationType = 0 OrElse identificationType = 7) Then
+        Me.View.VerificationCode = GetVerificationCode(nit)
+    Else
+        Me.View.VerificationCode = 0
+    End If
+End Sub
+```
+
+El resto del presentador no cambia.
 
 ---
 
 ## Orden restante
-1. Fix `Frm_Disposed` → `_identificationConfirmed = False`
-2. Aplicar 4 parches Designer
-3. Copiar `PThirdParty.vb` y pegarlo aquí para revisión
+1. Fix `Frm_Disposed`
+2. Designer (4 bloques)
+3. Parche `Calculate_VerificationCode` en `PThirdParty.vb`
 4. Compilar + smoke test
 
 ## Smoke test
@@ -74,6 +76,3 @@ Copiar el archivo completo de esta carpeta (`PThirdParty.vb`). Debe omitir DV cu
 - Guardar sin Clase: mensaje obligatorio
 - CIIU / Actividad económica ocultos
 - Nuevo/Deshacer: toolbar NewAndFind (no OnlyFind)
-
-## Nota EMask
-Usar `EMask.Numerico` (no `.Numeros` → BC30456).
