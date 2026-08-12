@@ -632,7 +632,7 @@ Agregar limpieza:
 
 ```vb
         _pendingIdentification = Nothing
-        _identificationConfirmed = Nothing
+        _identificationConfirmed = False
 ```
 
 ---

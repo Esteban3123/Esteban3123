@@ -571,7 +571,7 @@ Después de `INDBteThirdPartyNit.Text = ReturnValue`:
 Agregar:
 ```vb
         _pendingIdentification = Nothing
-        _identificationConfirmed = Nothing
+        _identificationConfirmed = False
 ```
 
 ---
