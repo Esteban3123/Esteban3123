@@ -1,78 +1,75 @@
-# Revisión PBI 29866 — estado (última revisión)
+# Revisión PBI 29866 — código pegado por Esteban
 
-## FrmThirdParty.vb — APROBADO con 1 corrección
+**Fecha revisión:** 2026-08-12  
+**Verdict:** Casi listo — **1 fix obligatorio** en `Frm_Disposed`
 
-| Requisito | Estado |
-|-----------|--------|
-| Flags `_pendingIdentification` / `_identificationConfirmed` | OK |
-| Gets null-safe | OK |
-| `INDsleClass.Enabled` | OK |
-| `CleanControls` / validación Clase / ConfirmIdentification | OK |
-| `ApplyNitRulesByClass` con `EMask.Numerico` | OK |
-| Layout runtime + `ClickDeshacer` | OK |
+| Archivo | Estado |
+|---------|--------|
+| `FrmThirdParty.Designer.vb` | **OK** — 4 cambios PBI aplicados |
+| `FrmThirdParty.vb` | **OK** salvo `Frm_Disposed` |
+| `PThirdParty.vb` | **OK** — DV por Clase aplicado |
 
-### Corrección en `Frm_Disposed`
+---
+
+## Designer — checklist (OK)
+
+- [x] `INDlyItemClass` en `INDLyGrThirdPartyBasicData.Items`
+- [x] `INDlyItemClass` **no** en `INDLyGrParameter.Items`
+- [x] `INDLciCIIU.Visibility = Never`
+- [x] `INDlygEconomicActivity.Visibility = Never`
+
+Opcional (no bloquea): MistyRose / `SetCampoObligatorio(True)` en `INDsleClass`; `TextSize` de Class en básicos (205 vs 135).
+
+---
+
+## FrmThirdParty.vb — lo que está bien
+
+- Flags `_pendingIdentification` / `_identificationConfirmed`
+- `ConfirmIdentification` + mensaje mismatch
+- `ApplyNitRulesByClass` con `EMask.Numerico` (Nacional) / alfanumérico (Extranjero)
+- Clase obligatoria en `ValidateControlsForm` (Natural y Jurídico)
+- Layout runtime: Clase en Segmento 1; CIIU / Actividad económica ocultos
+- KeyDown: doble confirmación solo en registro nuevo
+- Búsqueda / `ThirdParty_LoadControls` / `IdEntityLoaded`: sin reconfirmación
+- `ClickDeshacer` → solo `CleanControls()` (no `OnlyFind` después)
+- `CleanControls` resetea flags y vuelve a `NewAndFind`
+
+---
+
+## Único cambio pendiente (obligatorio)
+
+En `Frm_Disposed`:
+
 ```vb
-_identificationConfirmed = False   ' no Nothing
+' Cambiar:
+_identificationConfirmed = Nothing
+
+' Por:
+_identificationConfirmed = False
 ```
 
----
-
-## FrmThirdParty.Designer.vb — aplicar 4 bloques
-Ver `FrmThirdParty_Designer_APLICAR.md` / código enviado al usuario.
+`Boolean` no admite `Nothing`; al cerrar el form puede fallar.
 
 ---
 
-## PThirdParty.vb — PENDIENTE (baseline sin PBI)
+## PThirdParty.vb — OK
 
-El archivo pegado **no** tiene el cambio de DV por Clase.
-Reemplazar solo `Calculate_VerificationCode` por la versión de `PThirdParty.vb` de esta carpeta.
+`Calculate_VerificationCode`:
 
-```vb
-Public Sub Calculate_VerificationCode(ByVal nit As String, personType As Integer, identificationType As Integer, Optional FlagLoadControls As Boolean = True)
-    If Not FlagLoadControls Then
-        Exit Sub
-    End If
-
-    ' Extranjero: no calcular DV
-    If View.ClassThirdParty.HasValue AndAlso View.ClassThirdParty.Value = 2 Then
-        View.VerificationCode = String.Empty
-        Exit Sub
-    End If
-
-    ' Solo Nacional: NIT debe ser numérico
-    If View.ClassThirdParty.HasValue AndAlso View.ClassThirdParty.Value = 1 Then
-        If Not IsNumeric(nit) Then
-            View.VerificationCode = String.Empty
-            Exit Sub
-        End If
-    End If
-
-    If personType = 2 Then
-        Me.View.VerificationCode = GetVerificationCode(nit)
-    ElseIf personType = 1 AndAlso (identificationType = 0 OrElse identificationType = 7) Then
-        Me.View.VerificationCode = GetVerificationCode(nit)
-    Else
-        Me.View.VerificationCode = 0
-    End If
-End Sub
-```
-
-El resto del presentador no cambia.
+- Sale si `Not FlagLoadControls`
+- Clase 2 → limpia DV y sale
+- Clase 1 + NIT no numérico → limpia DV
+- Resto: lógica DV Jurídico / Natural intacta
 
 ---
 
-## Orden restante
-1. Fix `Frm_Disposed`
-2. Designer (4 bloques)
-3. Parche `Calculate_VerificationCode` en `PThirdParty.vb`
-4. Compilar + smoke test
+## Smoke test (ERP) después del fix
 
-## Smoke test
-- NIT nuevo: doble ingreso; mismatch → "Las identificaciones no coincidieron"
-- Búsqueda existente: sin reconfirmación
-- Clase Nacional: máscara numérica + DV
-- Clase Extranjero: alfanumérico, sin DV
-- Guardar sin Clase: mensaje obligatorio
-- CIIU / Actividad económica ocultos
-- Nuevo/Deshacer: toolbar NewAndFind (no OnlyFind)
+1. NIT nuevo: Enter → pedir confirmación; mismatch → "Las identificaciones no coincidieron"
+2. Búsqueda / carga existente: sin reconfirmación
+3. Clase Nacional: máscara numérica + DV
+4. Clase Extranjero: alfanumérico, sin DV
+5. Guardar sin Clase: mensaje obligatorio
+6. CIIU y Actividad económica ocultos
+7. Nuevo / Deshacer → toolbar NewAndFind (no OnlyFind)
+8. Cerrar form tras editar (valida el fix de Disposed)
