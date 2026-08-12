@@ -1,6 +1,7 @@
 # Acceptance Criteria — Habilitar Facturación Tipo Mandato
 
-Formulario: **Parámetros de Facturación** · Segmento: **Información Adicional**
+Formulario: **Parámetros de Facturación** (`FrmSettingBilling`) · Segmento: **Información Adicional**  
+Propiedad: `EnableMandateBilling` · Disparador: `ApplyBasicBilling`
 
 ---
 
