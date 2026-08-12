@@ -1,36 +1,30 @@
 # PBI — Habilitar Facturación Tipo Mandato
 
-Parámetro nuevo en **Parámetros de Facturación** (VIE RCM · Facturación Salud) para configurar si el cliente genera factura electrónica de tipo mandato.
+Parámetro en **Parámetros de Facturación** (`FrmSettingBilling`) para habilitar factura electrónica tipo mandato.
 
 | Campo | Valor |
 |--------|--------|
-| **Módulo** | Facturación Salud · VIE RCM |
-| **Formulario** | Parámetros de Facturación |
-| **Segmento** | Información Adicional |
-| **Campo UI** | Habilitar Facturación Tipo Mandato |
-| **Valores** | SI / NO |
-| **Default** | NO (todas las UO / clientes) |
-| **Visibilidad** | Solo si **Aplica Facturación Básica** = SI |
+| **Form** | `FrmSettingBilling` |
+| **Entidad** | `SettingsBilling` |
+| **Propiedad** | `EnableMandateBilling` |
+| **UI** | Habilitar Facturación Tipo Mandato (Si/No, default No) |
+| **Visible si** | `ApplyBasicBilling = True` |
 
-> Este repositorio no contiene el código fuente corporativo de Vie ERP. Los entregables son **guías, scripts y snippets** para aplicar en el repo de Facturación Salud (`ERP_Presentation` / servicios / BD).
+## Empezar aquí
+
+1. **[APLICAR.md](APLICAR.md)** — parches exactos sobre el formulario que enviaste  
+2. [ACCEPTANCE_CRITERIA.md](ACCEPTANCE_CRITERIA.md)  
+3. [SOLUCION.md](SOLUCION.md)  
 
 ## Entregables
 
 | Archivo | Uso |
 |---------|-----|
-| [SOLUCION.md](SOLUCION.md) | Análisis técnico completo (BD, backend, frontend, AC) |
-| [ACCEPTANCE_CRITERIA.md](ACCEPTANCE_CRITERIA.md) | Criterios de aceptación en formato Dado/Cuando/Entonces |
-| [APLICAR.md](APLICAR.md) | Pasos ordenados para implementar en el código real |
-| [mapas/UBICACION_UI.md](mapas/UBICACION_UI.md) | Ubicación del campo en el mockup |
-| [sql/Add_HabilitarFacturacionTipoMandato.sql](sql/Add_HabilitarFacturacionTipoMandato.sql) | Plantilla SQL (columna + default NO) |
-| [snippets/BillingParameters_Mandate.vb](snippets/BillingParameters_Mandate.vb) | Propiedad, binding y visibilidad condicionada |
-| [snippets/Gate_FacturacionMandato.vb](snippets/Gate_FacturacionMandato.vb) | Gate: ocultar/deshabilitar funciones de mandato si = NO |
-
-## Orden de aplicación recomendado
-
-1. Confirmar en el repo corporativo el formulario y la tabla de parámetros (buscar `AplicaFacturacionBasica` / `Aplica Facturación Básica`).
-2. Ejecutar el script SQL en QA (ajustar schema/tabla/columna reales).
-3. Extender DTO/entidad/servicio de guardado-lectura.
-4. Agregar el control en el segmento **Información Adicional** y la lógica de visibilidad.
-5. Aplicar el gate en menús/acciones de Facturación Mandato.
-6. Validar los AC de [ACCEPTANCE_CRITERIA.md](ACCEPTANCE_CRITERIA.md).
+| [APLICAR.md](APLICAR.md) | Pasos A1–A7 + Designer + BD + gate |
+| [sql/Add_EnableMandateBilling_SettingsBilling.sql](sql/Add_EnableMandateBilling_SettingsBilling.sql) | Columna BIT default 0 |
+| [snippets/FrmSettingBilling_EnableMandateBilling.vb](snippets/FrmSettingBilling_EnableMandateBilling.vb) | Fragmentos del form |
+| [snippets/ISettingBilling_EnableMandateBilling.vb](snippets/ISettingBilling_EnableMandateBilling.vb) | Interfaz |
+| [snippets/SettingsBilling_EnableMandateBilling.vb](snippets/SettingsBilling_EnableMandateBilling.vb) | Entidad |
+| [snippets/FrmSettingBilling_Designer_APLICAR.md](snippets/FrmSettingBilling_Designer_APLICAR.md) | Designer |
+| [snippets/Gate_FacturacionMandato.vb](snippets/Gate_FacturacionMandato.vb) | Gate AC6 |
+| [mapas/UBICACION_UI.md](mapas/UBICACION_UI.md) | Ubicación en mockup |

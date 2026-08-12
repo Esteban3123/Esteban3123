@@ -1,159 +1,292 @@
-# APLICAR — Habilitar Facturación Tipo Mandato
+# APLICAR — Habilitar Facturación Tipo Mandato (código real)
 
-Aplica estos cambios **en orden** sobre el código corporativo de Facturación Salud (VIE RCM).  
-Archivos típicos (nombres orientativos — confirmar con búsqueda):
+Formulario confirmado: **`FrmSettingBilling`** (`Presentacion.Billing`)  
+Interfaz: **`ISettingBilling`** · Entidad: **`SettingsBilling`** · Modelo: **`MSettingBilling`**
 
-| Capa | Archivos a ubicar |
-|------|-------------------|
-| UI | `FrmParametrosFacturacion*.vb` / `FrmBillingParameters*.vb` + `.Designer.vb` |
-| Contrato | DTO / interfaz de parámetros de facturación |
-| Datos | Tabla + SP Get/Save de parámetros por UO |
-| Gate | Menús / presenters / servicios de Facturación Mandato |
+Ancla existente: **`ApplyBasicBilling`** / control **`INDsleApplyBasicBilling`** (“Aplica Facturación Básica”).
 
-**Ancla de búsqueda:** `Aplica Facturación Básica` / `AplicaFacturacionBasica`.
+Nombre técnico del nuevo parámetro (alineado al estilo del form):
 
----
+| Capa | Nombre |
+|------|--------|
+| Label UI | Habilitar Facturación Tipo Mandato |
+| Propiedad | `EnableMandateBilling` As Boolean |
+| Control | `INDsleEnableMandateBilling` |
+| Layout item | `INDLciEnableMandateBilling` |
+| Columna BD / entidad | `EnableMandateBilling` (BIT, default 0) |
 
-## 0) Confirmación previa (15 min)
+Valores: **True = Si**, **False = No** (mismo `listApply` que `ApplyBasicBilling`).  
+Default: **False (No)**.
 
-1. Abrir el formulario **Parámetros de Facturación** en el código.
-2. Localizar el layout group **Información Adicional**.
-3. Anotar:
-   - Nombre real del control de **Aplica Facturación Básica**
-   - Tipo de valor (Boolean / `S`/`N` / `1`/`0`)
-   - Tabla y columna equivalentes en BD
-4. Copiar **exactamente** ese patrón para el nuevo campo.
+Aplica los cambios **en este orden**.
 
 ---
 
-## 1) Base de datos
+## 0) Designer (UI)
 
-1. Abrir [sql/Add_HabilitarFacturacionTipoMandato.sql](sql/Add_HabilitarFacturacionTipoMandato.sql).
-2. Reemplazar `dbo.BillingParameters` por el nombre real.
-3. Elegir Opción A (BIT) u Opción B (CHAR) según el patrón existente.
-4. Ejecutar en **QA** (el script viene con `ROLLBACK` por defecto).
-5. Actualizar SP/repositorio Get y Save para incluir la columna.
-6. Verificar backfill: todos los registros en **NO**.
+En el segmento **Información Adicional** (junto a `INDsleApplyBasicBilling` / `INDSleElectronicSalesTicket`):
 
-Checklist:
+1. Agregar `SearchLookUpEdit` o el mismo tipo de editor que use `INDsleApplyBasicBilling` → nombre **`INDsleEnableMandateBilling`**.
+2. Agregar `LayoutControlItem` → **`INDLciEnableMandateBilling`**.
+3. Caption / Text: **Habilitar Facturación Tipo Mandato**.
+4. Visibility inicial: `Never` (se muestra en runtime con `HideGroup`).
+5. No solapar Location con otros ítems del segmento.
 
-- [ ] Columna creada
-- [ ] Default NO
-- [ ] Backfill OK
-- [ ] Get devuelve el valor
-- [ ] Save persiste el valor
+Checklist Designer:
+
+- [ ] Control creado
+- [ ] Layout item en Información Adicional
+- [ ] Caption correcto
+
+Detalle de ejemplo: [snippets/FrmSettingBilling_Designer_APLICAR.md](snippets/FrmSettingBilling_Designer_APLICAR.md).
 
 ---
 
-## 2) DTO / entidad / mapper
+## 1) Interfaz `ISettingBilling`
 
-Agregar propiedad (ejemplo):
+Agregar (junto a `ApplyBasicBilling`):
 
 ```vb
-''' <summary>Habilitar Facturación Tipo Mandato. Default False = NO.</summary>
+''' <summary>
+''' Habilitar Facturación Tipo Mandato (Si/No). Default: False (No).
+''' Solo aplica cuando ApplyBasicBilling = True.
+''' </summary>
+Property EnableMandateBilling As Boolean
+```
+
+Archivo de referencia: [snippets/ISettingBilling_EnableMandateBilling.vb](snippets/ISettingBilling_EnableMandateBilling.vb).
+
+---
+
+## 2) Entidad `SettingsBilling` + BD
+
+### 2.1 Propiedad en la entidad
+
+```vb
+''' <summary>
+''' Habilitar Facturación Tipo Mandato. Default False = No.
+''' </summary>
 Public Property EnableMandateBilling As Boolean
 ```
 
-o
+Si la entidad se genera desde EDMX/DBML, regenerar tras el script SQL o mapear la columna a mano.
+
+### 2.2 Script SQL
+
+Usar [sql/Add_EnableMandateBilling_SettingsBilling.sql](sql/Add_EnableMandateBilling_SettingsBilling.sql):
+
+- Columna `EnableMandateBilling BIT NOT NULL DEFAULT(0)`
+- Backfill a `0` (No) en todas las UO
+- Ajustar el nombre real de la tabla si no es `SettingsBilling` / `Billing.SettingsBilling`
+
+También actualizar repositorio/SP/EF que lea y guarde `SettingsBilling` para incluir la columna (mismo sitio donde ya va `ApplyBasicBilling`).
+
+---
+
+## 3) `FrmSettingBilling.vb` — parches
+
+### A1. Propiedad (después de `ApplyBasicBilling`)
+
+Buscar:
 
 ```vb
-Public Property HabilitarFacturacionTipoMandato As Boolean
+    Public Property ApplyBasicBilling As Boolean Implements ISettingBilling.ApplyBasicBilling
+        Get
+            Return INDsleApplyBasicBilling.EditValue
+        End Get
+        Set(value As Boolean)
+            INDsleApplyBasicBilling.EditValue = value
+        End Set
+    End Property
 ```
 
-- [ ] Default = `False` en constructor / materialización
-- [ ] Mapper BD ↔ DTO
-- [ ] Null de BD se interpreta como `False`
+Agregar **inmediatamente después**:
+
+```vb
+    ''' <summary>
+    ''' Habilitar Facturación Tipo Mandato (Si/No). Default: False (No).
+    ''' Visible solo cuando ApplyBasicBilling = True.
+    ''' </summary>
+    Public Property EnableMandateBilling As Boolean Implements ISettingBilling.EnableMandateBilling
+        Get
+            If INDsleEnableMandateBilling.EditValue Is Nothing Then
+                Return False
+            End If
+            Return CBool(INDsleEnableMandateBilling.EditValue)
+        End Get
+        Set(value As Boolean)
+            INDsleEnableMandateBilling.EditValue = value
+        End Set
+    End Property
+```
+
+### A2. `InitializeTuples` — DataSource Si/No
+
+Buscar el bloque donde se asigna `listApply` a `INDsleApplyBasicBilling`:
+
+```vb
+        INDsleApplyBasicBilling.Properties.DataSource = listApply.ToList()
+        INDSleElectronicSalesTicket.Properties.DataSource = listApply.ToList()
+```
+
+Agregar una línea:
+
+```vb
+        INDsleApplyBasicBilling.Properties.DataSource = listApply.ToList()
+        INDsleEnableMandateBilling.Properties.DataSource = listApply.ToList()
+        INDSleElectronicSalesTicket.Properties.DataSource = listApply.ToList()
+```
+
+### A3. `HideGroup` — visibilidad condicionada
+
+El form ya muestra/oculta controles de facturación básica en `HideGroup()` cuando cambia `ApplyBasicBilling`.  
+Extender **ambos** branches.
+
+En el `If ApplyBasicBilling Then` (después de los `Visibility = Always` existentes), agregar:
+
+```vb
+            INDLciEnableMandateBilling.AllowHide = False
+            INDLciEnableMandateBilling.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always
+```
+
+En el `Else` (después de los `Visibility = Never` existentes), agregar:
+
+```vb
+            INDLciEnableMandateBilling.AllowHide = True
+            INDLciEnableMandateBilling.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never
+            EnableMandateBilling = False
+```
+
+> Al ocultar se fuerza **No**, para no persistir Si “escondido” y cumplir el AC del gate.
+
+`INDsleApplyBasicBilling_EditValueChanged` ya llama `HideGroup()` — no hace falta otro handler.
+
+### A4. `FrmSettingBilling_Load` — default No
+
+Buscar:
+
+```vb
+        ApplyBasicBilling = False
+        GeneratePromissoryNote = False
+```
+
+Agregar:
+
+```vb
+        ApplyBasicBilling = False
+        EnableMandateBilling = False
+        GeneratePromissoryNote = False
+```
+
+### A5. `CleanControls` — reset No
+
+Buscar:
+
+```vb
+        AssociateCostCenter = Nothing
+        ApplyBasicBilling = False
+        ValidateAgeOfMajority = False
+```
+
+Agregar:
+
+```vb
+        AssociateCostCenter = Nothing
+        ApplyBasicBilling = False
+        EnableMandateBilling = False
+        ValidateAgeOfMajority = False
+```
+
+### A6. `LoadControls` — lectura desde entidad
+
+Buscar:
+
+```vb
+                            ApplyBasicBilling = .ApplyBasicBilling
+                            LiquidateSinceControlOutPatientService = .LiquidateSinceControlOutPatientService
+```
+
+Agregar:
+
+```vb
+                            ApplyBasicBilling = .ApplyBasicBilling
+                            EnableMandateBilling = .EnableMandateBilling
+                            LiquidateSinceControlOutPatientService = .LiquidateSinceControlOutPatientService
+```
+
+`HideGroup()` se dispara por el `EditValueChanged` de `ApplyBasicBilling` al asignar; si en algún build no se dispara durante carga, llamar `HideGroup()` al final del `With`.
+
+### A7. `AssigningValues` — guardado
+
+Buscar:
+
+```vb
+            .ApplyBasicBilling = ApplyBasicBilling
+            .ValidateAgeOfMajority = ValidateAgeOfMajority
+```
+
+Agregar la asignación del mandato. Recomendado: solo persistir Si cuando aplica facturación básica:
+
+```vb
+            .ApplyBasicBilling = ApplyBasicBilling
+            If ApplyBasicBilling Then
+                .EnableMandateBilling = EnableMandateBilling
+            Else
+                .EnableMandateBilling = False
+            End If
+            .ValidateAgeOfMajority = ValidateAgeOfMajority
+```
+
+Alternativa mínima (si preferís una sola línea y ya forzás False en `HideGroup`):
+
+```vb
+            .EnableMandateBilling = EnableMandateBilling
+```
 
 ---
 
-## 3) Designer (UI)
+## 4) Gate (AC6)
 
-En el segmento **Información Adicional**:
+Cuando `EnableMandateBilling = False` (o `ApplyBasicBilling = False`), las funciones de Facturación Mandato no deben estar disponibles.
 
-1. Agregar `LookUpEdit` → `INDsleEnableMandateBilling`.
-2. Agregar `LayoutControlItem` → `INDLciEnableMandateBilling`.
-3. Text/Caption: **Habilitar Facturación Tipo Mandato**.
-4. Mismo `DataSource` SI/NO que Aplica Facturación Básica.
-5. Posición: al final del segmento (después de Tiquete Electrónico de Venta, según mockup).
-6. `Visibility = Never` inicial (el runtime la activa).
+Usar [snippets/Gate_FacturacionMandato.vb](snippets/Gate_FacturacionMandato.vb):
 
-Ver [mapas/UBICACION_UI.md](mapas/UBICACION_UI.md).
+```vb
+Public Function IsMandateBillingEnabled(settings As SettingsBilling) As Boolean
+    If settings Is Nothing Then Return False
+    If Not settings.ApplyBasicBilling Then Return False
+    Return settings.EnableMandateBilling
+End Function
+```
 
-- [ ] Campo visible en diseño dentro de Información Adicional
-- [ ] No solapa otros layout items (Location distinto)
-
----
-
-## 4) Code-behind del formulario
-
-Tomar [snippets/BillingParameters_Mandate.vb](snippets/BillingParameters_Mandate.vb) y adaptar nombres.
-
-Orden sugerido de enganches:
-
-| Momento | Qué llamar |
-|---------|------------|
-| Constructor / Load data source SI-NO | Asignar DataSource al nuevo LookUp |
-| Nuevo / CleanControls | `ApplyMandateBillingDefaults()` |
-| Después de cargar entidad | `LoadMandateBillingFromEntity(...)` |
-| `EditValueChanged` de Aplica Facturación Básica | `RefreshMandateBillingVisibility()` |
-| Antes de Save | `MapMandateBillingToEntity(...)` |
-
-Reglas obligatorias:
-
-1. Default **NO**.
-2. Si Aplica Facturación Básica ≠ SI → ocultar y forzar **NO**.
-3. Guardar el valor solo efectivo (con Básica = NO → NO).
-
-- [ ] Default NO
-- [ ] Visibilidad condicionada
-- [ ] Save/Load OK
+Aplicar en menús/botones de mandato (Presentation) y al inicio de operaciones de mandato (servicio).
 
 ---
 
-## 5) Gate de funcionalidades de mandato (AC6)
+## 5) Prueba rápida (AC)
 
-Usar [snippets/Gate_FacturacionMandato.vb](snippets/Gate_FacturacionMandato.vb).
+| # | Acción | Esperado |
+|---|--------|----------|
+| 1 | UO con `ApplyBasicBilling = True` | Se ve **Habilitar Facturación Tipo Mandato** |
+| 2 | Abrir combo | Solo Si / No |
+| 3 | Registro nuevo / migrado | No |
+| 4 | Guardar Si → cerrar app → abrir | Persiste Si |
+| 5 | `ApplyBasicBilling = False` | Campo oculto; valor efectivo No |
+| 6 | Parámetro No | Funciones de mandato no disponibles |
 
-1. En Presentation: ocultar/deshabilitar botones, pestañas o ítems de menú de mandato cuando `IsMandateBillingEnabled` = False.
-2. En servicios: `EnsureMandateBillingAllowed` al inicio de operaciones de mandato.
-3. No confiar solo en ocultar UI.
-
-- [ ] UI oculta con parámetro NO
-- [ ] Servicio rechaza con parámetro NO
-- [ ] Con parámetro SI (y Básica SI) las funciones se habilitan
-
----
-
-## 6) Prueba manual (AC)
-
-Seguir [ACCEPTANCE_CRITERIA.md](ACCEPTANCE_CRITERIA.md):
-
-| Paso | Acción | Esperado |
-|------|--------|----------|
-| 1 | Básica = SI | Se ve el nuevo campo |
-| 2 | Solo opciones SI/NO | OK |
-| 3 | Registro nuevo / migrado | NO |
-| 4 | Guardar SI → cerrar app → abrir | Sigue SI |
-| 5 | Básica = NO | Campo oculto |
-| 6 | Parámetro NO | Sin funciones de mandato |
+Detalle formal: [ACCEPTANCE_CRITERIA.md](ACCEPTANCE_CRITERIA.md).
 
 ---
 
-## 7) Evidencias para el PBI
+## Archivos a tocar (checklist)
 
-Adjuntar en Azure DevOps:
+| Archivo | Cambio |
+|---------|--------|
+| `FrmSettingBilling.Designer.vb` | Control + LayoutItem |
+| `FrmSettingBilling.vb` | A1–A7 |
+| `ISettingBilling` (MVP) | Property |
+| `SettingsBilling` (Domain.Entities) | Property + mapping |
+| BD / repositorio | Columna BIT default 0 |
+| UI/servicios mandato | Gate |
 
-1. Captura Information Adicional con el campo (Básica = SI, valor NO).
-2. Captura con valor SI guardado.
-3. Captura con Básica = NO (campo no visible).
-4. Script SQL ejecutado en QA + resultado del SELECT de verificación.
-5. Checklist AC marcado.
-
----
-
-## Notas rápidas de implementación
-
-- **No inventar** un DataSource SI/NO distinto: reutilizar el del formulario.
-- Si el layout usa `LayoutVisibility`, preferirlo sobre `Visible` del control suelto.
-- Multi-UO: el flag es **por unidad operativa**, no un switch global del cliente.
-- Este PBI **no** implementa el XML DIAN de mandato; solo el parámetro y el gate.
+Snippet consolidado del form: [snippets/FrmSettingBilling_EnableMandateBilling.vb](snippets/FrmSettingBilling_EnableMandateBilling.vb).
