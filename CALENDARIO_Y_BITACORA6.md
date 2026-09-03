@@ -60,7 +60,7 @@ Todas las fechas de inicio/fin de actividades deben ser **lunes a viernes hábil
 | 4 | 22/06/2026 | 07/07/2026 | Hecha |
 | 5 | 07/07/2026 | 21/07/2026 | Hecha |
 | **6** | **22/07/2026** | **06/08/2026** | **Lista:** `Bitacora6_Esteban_Andres_Perdomo_Rojas.xlsx` / `.docx` |
-| 7 | 07/08/2026 | 21/08/2026 | Pendiente · festivos 07/08 y 17/08 (actividades desde 10/08) |
+| **7** | **07/08/2026** | **21/08/2026** | **Lista:** `Bitacora7_Esteban_Andres_Perdomo_Rojas.xlsx` / `.docx` · festivos 07/08 y 17/08 |
 | 8 | 22/08/2026 | 06/09/2026 | Pendiente |
 | 9 | 07/09/2026 | 21/09/2026 | Pendiente |
 | 10 | 22/09/2026 | 07/10/2026 | Pendiente |
