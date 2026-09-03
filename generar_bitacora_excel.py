@@ -224,8 +224,9 @@ def generar_excel(datos, actividades, salida):
 if __name__ == "__main__":
     from datos_bitacora import DATOS, ACTIVIDADES
 
+    n = DATOS.get("bitacora_n", "X")
     generar_excel(
         DATOS,
         ACTIVIDADES,
-        "/workspace/Bitacora6_Esteban_Andres_Perdomo_Rojas.xlsx",
+        f"/workspace/Bitacora{n}_Esteban_Andres_Perdomo_Rojas.xlsx",
     )
