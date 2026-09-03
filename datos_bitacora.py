@@ -1,75 +1,137 @@
 # =============================================================================
-# COMPLETA ESTOS DATOS Y LUEGO EJECUTA:  python3 generar_bitacora.py
-# Bitácora N° 1  |  23/10/2025 – 07/11/2025
+# Bitácora N° 6  |  22/07/2026 – 06/08/2026
+# Esteban Andrés Perdomo Rojas — INDIRA HEALTHTECH S.A.S
 # =============================================================================
 
 DATOS = {
-    "bitacora_n": "1",
-    "periodo_desde": "23/10/2025",
-    "periodo_hasta": "07/11/2025",
-    "fecha_entrega": "06/11/2025",
+    "bitacora_n": "6",
+    "periodo_desde": "22/07/2026",
+    "periodo_hasta": "06/08/2026",
+    "fecha_entrega": "06/08/2026",
     # --- Aprendiz ---
-    "nombre": "",  # Ej: ESTEBAN PERDOMO ...
+    "nombre": "Esteban Andres Perdomo Rojas",
     "tipo_doc": "CC",
-    "num_doc": "",
-    "telefono": "",
-    "correo_inst": "",  # @soy.sena.edu.co
-    "correo_pers": "",
-    "direccion": "",
-    "grupo": "",  # Número de ficha
-    "modalidad_formacion": "",  # Virtual / Presencial / A Distancia
-    "programa": "",  # Ej: Análisis y Desarrollo de Software
+    "num_doc": "1077850163",
+    "telefono": "3142032906",
+    "correo_inst": "esteban_perdomo@soy.sena.edu.co",
+    "correo_pers": "estebanperdomo56@gmail.com",
+    "direccion": "Neiva Huila",
+    "grupo": "2996976",
+    "modalidad_formacion": "presencial",
+    "programa": "Analisis y Desarrollo de Software",
     "modalidad_etapa": "Presencial",
     "exterior": "No",
     "pais": "Colombia",
     # --- Empresa ---
-    "empresa": "",
-    "nit": "",
-    "dir_empresa": "",
+    "empresa": "INDIRA HEALTHTECH S.A.S",
+    "nit": "900970948",
+    "dir_empresa": "Cra 5A N° 22-31 Sevilla",
     # --- Jefe / Supervisor ---
-    "jefe_nombre": "",
-    "jefe_cargo": "",
-    "jefe_tel": "",
-    "jefe_correo": "",
+    "jefe_nombre": "Diego Andres Roldan Lozano",
+    "jefe_cargo": "VP of Technology",
+    "jefe_tel": "3164187506",
+    "jefe_correo": "droldan@indigo.tech",
     # --- Instructor SENA ---
-    "instructor_nombre": "",
-    "instructor_correo": "",
-    # --- Alternativa (una sola) ---
-    # Opciones:
-    # "Contrato de aprendizaje" | "Monitoria" | "Proyecto productivo"
-    # "Contrato de vínculo formativo" | "Vínculo laboral"
+    "instructor_nombre": "PAULO ANDRES RINCON",
+    "instructor_correo": "princon@sena.edu.co",
+    # --- Alternativa ---
     "alternativa": "Contrato de aprendizaje",
     # --- ARL ---
-    "arl_afiliado": "Sí",
-    "arl_nivel": "",  # I, II, III, IV o V
-    "arl_corresponde": "Sí",
-    "arl_epp": "NA",  # Sí / No / NA
+    "arl_afiliado": "SI",
+    "arl_nivel": "I",
+    "arl_corresponde": "SI",
+    "arl_epp": "SI",
 }
 
-# --- Actividades del periodo (agrega las que necesites) ---
+# Solo días hábiles (sin fines de semana ni festivos)
 ACTIVIDADES = [
     {
-        "descripcion": "",  # Qué hiciste
-        "competencias": "",  # Competencias del programa aplicadas
-        "fecha_inicio": "23/10/25",
-        "fecha_fin": "31/10/25",
-        "evidencia": "",  # documento / proceso / producto / entregable
+        "descripcion": (
+            "Continuación del análisis y validación de la configuración de los "
+            "proyectos ERP_Presentation y ERP_Services, verificando referencias, "
+            "dependencias y la correcta carga de archivos de configuración para "
+            "la ejecución del sistema."
+        ),
+        "competencias": (
+            "Implementar la solución de software de acuerdo con los requisitos "
+            "de operación y modelos de referencia."
+        ),
+        "fecha_inicio": "22/07/26",
+        "fecha_fin": "24/07/26",
+        "evidencia": "Proceso de validación de configuración / registro de hallazgos.",
         "observaciones": "Sin inasistencias.",
     },
     {
-        "descripcion": "",
-        "competencias": "",
-        "fecha_inicio": "01/11/25",
-        "fecha_fin": "07/11/25",
-        "evidencia": "",
+        "descripcion": (
+            "Revisión de excepciones y flujo de inicialización en el ERP, "
+            "identificando causas de errores en tiempo de ejecución y aplicando "
+            "ajustes menores en la configuración de los módulos Presentation.Client "
+            "y Presentation.Client.MVP."
+        ),
+        "competencias": (
+            "Controlar la calidad del servicio de software de acuerdo con los "
+            "estándares técnicos."
+        ),
+        "fecha_inicio": "27/07/26",
+        "fecha_fin": "30/07/26",
+        "evidencia": "Proceso de diagnóstico / documento de hallazgos.",
         "observaciones": "",
     },
     {
-        "descripcion": "",
-        "competencias": "",
-        "fecha_inicio": "",
-        "fecha_fin": "",
-        "evidencia": "",
-        "observaciones": "",
+        "descripcion": (
+            "Análisis y corrección de bug de interfaz en el formulario Diseño - "
+            "Subgrupos (FrmSubGroup): desalineación de los checkboxes Maneja Lote "
+            "y Maneja Fecha Vencimiento. Se ajustaron los LayoutControlItem en el "
+            "Designer de DevExpress para alinear los controles sin modificar la "
+            "lógica de negocio."
+        ),
+        "competencias": (
+            "Desarrollar la solución de software de acuerdo con el diseño y "
+            "metodologías de desarrollo."
+        ),
+        "fecha_inicio": "03/08/26",
+        "fecha_fin": "03/08/26",
+        "evidencia": "Producto: ajuste de layout en Designer / capturas del formulario.",
+        "observaciones": "Tiempo aproximado de solución: 2 a 3 horas.",
+    },
+    {
+        "descripcion": (
+            "Investigación del bug Azure DevOps 39486 del Informe Gestión de "
+            "Cuentas Detallado (Vie RCM): la columna Paciente en el PDF mostraba "
+            "solo el nombre. Se realizó trazabilidad desde el formulario y el "
+            "reporte DevExpress hasta la entidad XPO y la vista SQL en ambiente QA."
+        ),
+        "competencias": (
+            "Controlar la calidad del servicio de software de acuerdo con los "
+            "estándares técnicos. Diseñar la solución de software de acuerdo con "
+            "procedimientos y requisitos técnicos."
+        ),
+        "fecha_inicio": "03/08/26",
+        "fecha_fin": "04/08/26",
+        "evidencia": (
+            "Documento: ticket Azure DevOps 39486 / proceso de análisis "
+            "Presentation → reporte → XPO → vista SQL."
+        ),
+        "observaciones": "Tiempo aproximado de investigación: 4 a 5 horas.",
+    },
+    {
+        "descripcion": (
+            "Elaboración del script SQL ALTER VIEW de "
+            "AccountManagement.ViewReportAccountManagement para concatenar "
+            "identificación y nombre del paciente (IPCODPACI - IPNOMCOMP) en el "
+            "campo PatientCodeName, dejando el PDF del informe en el formato esperado."
+        ),
+        "competencias": (
+            "Desarrollar la solución de software de acuerdo con el diseño y "
+            "metodologías de desarrollo. Implementar la solución de software de "
+            "acuerdo con los requisitos de operación y modelos de referencia."
+        ),
+        "fecha_inicio": "04/08/26",
+        "fecha_fin": "05/08/26",
+        "evidencia": (
+            "Documento: script SQL ALTER VIEW / proceso de verificación con "
+            "OBJECT_DEFINITION en SQL Server."
+        ),
+        "observaciones": "Tiempo aproximado: 2 a 3 horas. Causa raíz en la vista SQL.",
     },
 ]

@@ -444,8 +444,9 @@ def generar(datos, actividades, salida):
 if __name__ == "__main__":
     from datos_bitacora import DATOS, ACTIVIDADES
 
+    n = DATOS.get("bitacora_n", "X")
     generar(
         DATOS,
         ACTIVIDADES,
-        "/workspace/GFPI-F-147_Bitacora_1_Etapa_Productiva.docx",
+        f"/workspace/Bitacora{n}_Esteban_Andres_Perdomo_Rojas.docx",
     )
