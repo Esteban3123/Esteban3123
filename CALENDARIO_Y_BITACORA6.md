@@ -59,7 +59,7 @@ Todas las fechas de inicio/fin de actividades deben ser **lunes a viernes hábil
 | 3 | 07/06/2026 | 21/06/2026 | Hecha |
 | 4 | 22/06/2026 | 07/07/2026 | Hecha |
 | 5 | 07/07/2026 | 21/07/2026 | Hecha |
-| **6** | **22/07/2026** | **06/08/2026** | **Pendiente — incluye bugs 03–04/08 · 12 días hábiles** |
+| **6** | **22/07/2026** | **06/08/2026** | **Lista:** `Bitacora6_Esteban_Andres_Perdomo_Rojas.xlsx` / `.docx` |
 | 7 | 07/08/2026 | 21/08/2026 | Pendiente · festivos 07/08 y 17/08 (actividades desde 10/08) |
 | 8 | 22/08/2026 | 06/09/2026 | Pendiente |
 | 9 | 07/09/2026 | 21/09/2026 | Pendiente |
@@ -111,7 +111,7 @@ Configuración ERP, NullReferenceException, estructura ERP_Presentation / ERP_Se
 | Inicio | 22/07/26 |
 | Fin | 24/07/26 |
 | Evidencia | Proceso de validación de configuración / registro de hallazgos. |
-| Observaciones | Sin inasistencias. (22–24/07: mié–vie) |
+| Observaciones | Sin inasistencias. |
 
 ### Fila 2
 | Campo | Texto |
@@ -121,7 +121,7 @@ Configuración ERP, NullReferenceException, estructura ERP_Presentation / ERP_Se
 | Inicio | 27/07/26 |
 | Fin | 30/07/26 |
 | Evidencia | Proceso de diagnóstico / documento de hallazgos. |
-| Observaciones | (27–30/07: lun–jue) |
+| Observaciones | |
 
 ### Fila 3
 | Campo | Texto |
@@ -131,7 +131,7 @@ Configuración ERP, NullReferenceException, estructura ERP_Presentation / ERP_Se
 | Inicio | 03/08/26 |
 | Fin | 03/08/26 |
 | Evidencia | Producto: ajuste de layout en Designer / capturas del formulario. |
-| Observaciones | Tiempo aproximado de solución: 2 a 3 horas. (lunes hábil) |
+| Observaciones | Tiempo aproximado de solución: 2 a 3 horas. |
 
 ### Fila 4
 | Campo | Texto |
@@ -141,7 +141,7 @@ Configuración ERP, NullReferenceException, estructura ERP_Presentation / ERP_Se
 | Inicio | 03/08/26 |
 | Fin | 04/08/26 |
 | Evidencia | Documento: ticket Azure DevOps 39486 / proceso de análisis Presentation → reporte → XPO → vista SQL. |
-| Observaciones | Tiempo aproximado de investigación: 4 a 5 horas. (lun–mar) |
+| Observaciones | Tiempo aproximado de investigación: 4 a 5 horas. |
 
 ### Fila 5
 | Campo | Texto |
@@ -151,7 +151,7 @@ Configuración ERP, NullReferenceException, estructura ERP_Presentation / ERP_Se
 | Inicio | 04/08/26 |
 | Fin | 05/08/26 |
 | Evidencia | Documento: script SQL ALTER VIEW / proceso de verificación con OBJECT_DEFINITION en SQL Server. |
-| Observaciones | Tiempo aproximado: 2 a 3 horas. Causa raíz en la vista SQL. (mar–mié; 06/08 entrega) |
+| Observaciones | Tiempo aproximado: 2 a 3 horas. Causa raíz en la vista SQL. |
 
 ---
 
